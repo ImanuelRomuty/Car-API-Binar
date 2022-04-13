@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 
 import com.example.networkingwithretrofitchapter5.adapter.MainAdapter
@@ -13,6 +14,9 @@ import com.example.networkingwithretrofitchapter5.databinding.FragmentHomeBindin
 import com.example.networkingwithretrofitchapter5.model.GetAllCarResponseItem
 
 import com.example.networkingwithretrofitchapter5.network.CarsApi
+
+import com.example.networkingwithretrofitchapter5.request.RegisterRequest
+import com.example.networkingwithretrofitchapter5.model.RegisterResponseItem
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +41,29 @@ class HomeFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchAllData()
+
+
+        binding.addButton.setOnClickListener {
+/*            //PASSWORD HARUS 6 KARAKTER
+            val registerRequest = RegisterRequest(
+                "testing121wa2@gmail.com","112awe122","admin"
+            )
+
+            CarsApi.instance.registerAdmin(registerRequest).enqueue(object : Callback<RegisterResponseItem>{
+                override fun onResponse(
+                    call: Call<RegisterResponseItem>,
+                    response: Response<RegisterResponseItem>
+                ) {
+                    Log.d("Register_Sukses","REGISTER DATA => ${response.body()}")
+                }
+
+                override fun onFailure(call: Call<RegisterResponseItem>, t: Throwable) {
+                    Log.d("FAIL","FAIL")
+                }
+            })*/
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterFragment())
+        }
+
     }
     private fun fetchAllData(){
         CarsApi.instance.AllCar().enqueue(object : Callback<List<GetAllCarResponseItem>>{
@@ -55,6 +82,7 @@ class HomeFragment : Fragment(){
             }
         })
     }
+
     private fun showList(data: List<GetAllCarResponseItem>?){
         val adapter = MainAdapter(object : MainAdapter.OnClickListener{
             override fun onClickItem(data: GetAllCarResponseItem) {

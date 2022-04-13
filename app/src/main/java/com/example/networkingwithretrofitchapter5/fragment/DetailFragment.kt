@@ -39,6 +39,7 @@ class DetailFragment : Fragment() {
         binding.startRentAt.text = "Start Rent : $startRentAt"
         binding.status.text = "Status :  ${status.toString()}"
         binding.updatedAt.text = "Status : $updateAt"
+
         Glide.with(this)
             .load(image)
             .into(binding.imageCar)
