@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.networkingwithretrofitchapter5.R
 import com.example.networkingwithretrofitchapter5.databinding.FragmentRegisterBinding
 import com.example.networkingwithretrofitchapter5.model.RegisterResponseItem
 import com.example.networkingwithretrofitchapter5.network.CarsApi
 import com.example.networkingwithretrofitchapter5.request.RegisterRequest
+import com.example.networkingwithretrofitchapter5.viewModel.RegistViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +26,8 @@ class RegisterFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel : RegistViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +59,7 @@ class RegisterFragment : Fragment() {
                     binding.materialUsername.error = "Email must @gmail.com"
                 }
                 else ->{
-                    CarsApi.instance.registerAdmin(registerRequest = registerCheckEmpty).enqueue(object  : Callback<RegisterResponseItem>{
+/*                    CarsApi.instance.registerAdmin(registerRequest = registerCheckEmpty).enqueue(object  : Callback<RegisterResponseItem>{
                         override fun onResponse(
                             call: Call<RegisterResponseItem>,
                             response: Response<RegisterResponseItem>
@@ -70,8 +74,14 @@ class RegisterFragment : Fragment() {
                         override fun onFailure(call: Call<RegisterResponseItem>, t: Throwable) {
                             Log.d("FAILRESPONSE","GAGAL POKOKK")
                         }
-                    })
-                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
+                    })*/
+//                    viewModel.regist.observe(viewLifecycleOwner){
+//                        daftar ->
+                    viewModel.register(registerCheckEmpty)
+                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                    }
+
+//                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
                 }
             }
         }
@@ -111,7 +121,7 @@ class RegisterFragment : Fragment() {
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
         }*/
 
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

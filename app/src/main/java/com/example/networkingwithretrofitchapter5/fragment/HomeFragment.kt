@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
 
@@ -17,6 +18,7 @@ import com.example.networkingwithretrofitchapter5.network.CarsApi
 
 import com.example.networkingwithretrofitchapter5.request.RegisterRequest
 import com.example.networkingwithretrofitchapter5.model.RegisterResponseItem
+import com.example.networkingwithretrofitchapter5.viewModel.MainViewModel
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +30,7 @@ class HomeFragment : Fragment(){
     private var _binding: FragmentHomeBinding?=null
     private val binding get() = _binding!!
 /*    lateinit var listRecycler : RecyclerView*/
+    private val viewModel : MainViewModel by viewModels()
 
     private val list = ArrayList<GetAllCarResponseItem>()
     override fun onCreateView(
@@ -40,11 +43,13 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupObserver()
         fetchAllData()
 
 
-        binding.addButton.setOnClickListener {
-/*            //PASSWORD HARUS 6 KARAKTER
+        //REGISTER
+/*        binding.addButton.setOnClickListener {
+*//*            //PASSWORD HARUS 6 KARAKTER
             val registerRequest = RegisterRequest(
                 "testing121wa2@gmail.com","112awe122","admin"
             )
@@ -60,12 +65,31 @@ class HomeFragment : Fragment(){
                 override fun onFailure(call: Call<RegisterResponseItem>, t: Throwable) {
                     Log.d("FAIL","FAIL")
                 }
-            })*/
+            })*//*
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterFragment())
-        }
+        }*/
 
     }
+    private fun setupObserver(){
+/*        viewModel.getCars().observe(viewLifecycleOwner){ carsList ->
+            Log.d("MAINACTIVITY","DATA NYA => $carsList")
+        }*/
+    }
+
+
     private fun fetchAllData(){
+/*        viewModel.getCars().observe(viewLifecycleOwner){result ->
+            showList(result)
+        }*/
+
+        viewModel.cars.observe(viewLifecycleOwner){
+            resultCar->showList(resultCar)
+        }
+    }
+
+
+
+/*    private fun fetchAllData(){
         CarsApi.instance.AllCar().enqueue(object : Callback<List<GetAllCarResponseItem>>{
             override fun onResponse(
                 call: Call<List<GetAllCarResponseItem>>,
@@ -81,7 +105,7 @@ class HomeFragment : Fragment(){
                 Log.d("gagal","POKOK GAGAL DEH")
             }
         })
-    }
+    }*/
 
     private fun showList(data: List<GetAllCarResponseItem>?){
         val adapter = MainAdapter(object : MainAdapter.OnClickListener{

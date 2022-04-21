@@ -1,8 +1,10 @@
 package com.example.networkingwithretrofitchapter5.network
 
+import com.example.networkingwithretrofitchapter5.model.AdminLoginResponse
 import com.example.networkingwithretrofitchapter5.request.RegisterRequest
 import com.example.networkingwithretrofitchapter5.model.GetAllCarResponseItem
 import com.example.networkingwithretrofitchapter5.model.RegisterResponseItem
+import com.example.networkingwithretrofitchapter5.request.LoginAdmin
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -28,6 +30,8 @@ interface CarsApiService{
     //body file yang ingin mau dipanggil
     fun registerAdmin(@Body registerRequest: RegisterRequest): Call<RegisterResponseItem>
 
+    @POST("admin/auth/login")
+    fun loginAdmin(@Body loginAdmin : LoginAdmin): Call<AdminLoginResponse>
 
 
 
